@@ -1,3 +1,5 @@
+#include <rtos-master\rtos.hpp>
+
 class schieten : public rtos::task<>{
 	enum state_t{IDLE, SHOOT, RELOAD, EMPTYMAG};
 	private:
@@ -20,10 +22,10 @@ class schieten : public rtos::task<>{
 		SpeakerController SpeakerController
 		):{	
 			ReloadButton.addButtonListener)(this);
-			Trigger.addButtonListener(this)
+			Trigger.addButtonListener(this);
 		}
 
-	1
+	
 	public:
 	void main(){
 		for(;;){
