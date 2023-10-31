@@ -1,36 +1,20 @@
-class game : public rtos::task<>{
-    enum state_game{PreGame, Playing, Hit, EndGame}
+#include "rtos.hpp"
+#include "Button.hpp"
+
+class Game: public rtos::task<>{
     private:
-        state_game     state = PreGame;
-        
-        rtos::channel    result;
-        Life            Life;
-        rtos::timer        gameTimer;
-        rtos::timer        countdownTimer;
-        HitList            HitList;
-        
-        spel(Life& Life):
-        Life(Life)
-        {}
-    void game_main(){
-        for(;;){
-            switch(state){
-                case PreGame:
-                    countdownTimer.start(countdownTime);
-                    state = Playing;
-                case Playing:
-                    gameTimer.start(gameTime);
-                    state = Hit;
-                case Hit:
-                    Life -=1;
-                    HitList.append(HitID);
-                    if Life != 0:
-                        case Playing;
-                    if Life = 0:
-                        dead();
-                case EndGame:
-                    case = PreGame;
-            }
-        }
-    };
+        int play_time;
+        rtos::clock time;
+        int playerID;
+        int lives_max;
+        int bullets_max;
+        int bullets;
+        void main() override{for (;;){}}
+    public:
+    Game(int play_time, int playerID, int lives_max, int buttons_max):
+        task(3, "Gameplay"),
+        time(this, (play_time*rtos::ms), "time"),
+        bullets(bullets_max){}
+        // gamePlay(){}
+    void gamePlay();
 };
