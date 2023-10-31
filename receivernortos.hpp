@@ -19,7 +19,7 @@ public:
         // hwlib::cout << pin.read()<< hwlib::endl;
         auto start = hwlib::now_us();
         while(pin.read()) {
-            if(hwlib::now_us() - start > 100000){ // Timeout after 5 milliseconds
+            if(hwlib::now_us() - start > 5000){ // Timeout after 5 milliseconds
                 // hwlib::cout << "error"<< hwlib::endl;
                 return -1;
             }
