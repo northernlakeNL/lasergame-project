@@ -4,7 +4,8 @@
 #include "rtos.hpp"
 #include "IR_Receiver.hpp"
 #include "I_necreceiver.hpp"
-
+#include "logger2.hpp"
+extern Logger* pLogger;
 class SignalPauseDetector: public rtos::task<> {
 private:
     
@@ -19,8 +20,8 @@ private:
     State currentState = WAIT_PAUSE;
 
     void main(){
+        t_signalUs = 0;
         for(;;){
-            t_signalUs = 0;
             switch(currentState){
                 case WAIT_PAUSE:
                     hwlib::wait_us(100);
@@ -40,6 +41,8 @@ private:
                 if(this->receiver.read() != 0){
                     t_pauzeUs += 100;
                     // hwlib::cout<<t_pauzeUs<< hwlib::endl;
+                    // pLogger->logText("t_pauzeUs");
+                    // pLogger->logInt(int(t_pauzeUs));
                     if(t_pauzeUs > 6000){
                         necController.pauseDetected(t_pauzeUs);
                         // hwlib::cout<<"hoi"<< hwlib::endl;

@@ -12,7 +12,7 @@
 SOURCES :=
 
 # header files in this project
-HEADERS :=SignalPauseDetector.hpp IR_Receiver.hpp I_necreceiver.hpp NecReciever.hpp
+HEADERS :=SignalPauseDetector.hpp IR_Receiver.hpp I_necreceiver.hpp NecReciever.hpp messages.hpp MsgLogger.hpp
 
 # other places to look for files for this project
 SEARCH  := 
