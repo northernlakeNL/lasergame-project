@@ -26,7 +26,7 @@ public:
     void main() override{
         for(;;){
         getMessage = messageChannel.read();
-        // pLogger->logInt(getMessage);
+        pLogger->logInt(getMessage);
 
 
         }

@@ -54,7 +54,7 @@ public:
         msg = 0; 
         uint8_t mloc = m;
 
-        for (unsigned int i = 0; i <= n ; i++) {
+        for (unsigned int i = 0; i < n ; i++) {
             msg |= ((mloc >> i) & 1) << (7 - i);
         }
         nofBytes = n/8;
@@ -83,14 +83,16 @@ public:
                 case IDLE_BITPASS:
                     t_pauzeUs = pauseChannel.read();
                     if((t_pauzeUs > 200 )&& (t_pauzeUs < 2000)){
-                        
+                        m = m << 1;
                         if(t_pauzeUs > 1100){
                             m |= 1;
                         }
-                        m = m << 1;
+                        
                         n++; 
                     }
                     else{
+                        pLogger->logInt(n);
+                        pLogger->logInt(m);
                         extractMessage(msg, nofBytes, m, n);
                         messages.messageRecieved(msg, nofBytes);
                         currentState = IDLE_SIGNAL;
