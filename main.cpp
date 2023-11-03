@@ -2,7 +2,7 @@
 #include "rtos.hpp"
 #include "SignalPauseDetector.hpp"
 #include "IR_Receiver.hpp"
-// #include "IR_Emitter.hpp"
+#include "IR_Emitter.hpp"
 #include "NecReciever.hpp"
 #include "MsgLogger.hpp"
 #include "logger2.hpp"
@@ -25,7 +25,7 @@ int main() {
    auto trigger= hwlib::target::pin_in( hwlib::target::pins::d26 );
    
    IR_receiver receiver(ir_detector_pin);
-   // IR_emitter emitter(emitterPin, trigger);
+   IR_emitter emitter(emitterPin, trigger);
 
    MsgLogger messageLogger;
    NecReciever nec(messageLogger);

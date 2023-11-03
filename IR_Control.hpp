@@ -2,14 +2,13 @@
 #define IR_CONTROL_HPP
 #include <array>
 
-template<typename S>
+
 class IR_Control{
 
 public:
-    IR_Control():
-    {}
+    IR_Control();
 
-    virtual void send(std::array<int , S>) = 0;
+    virtual void send(std::array<int , 8>) = 0;
 };
 
 #endif

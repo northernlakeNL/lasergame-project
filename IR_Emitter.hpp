@@ -3,13 +3,14 @@
 #include "hwlib.hpp"
 #include <array>
 #include "rtos.hpp"
-#include "IR_Control.hpp"
-template<typename S>
-class IR_emitter : public rtos::task<>, public IR_Control {
+// #include "IR_Control.hpp"
+
+class IR_emitter : public rtos::task<> {
 private:
     hwlib::target::d2_36kHz& pin;
     hwlib::target::pin_in & button;
     bool pressed = false;
+    std::array<int , 8> arr = {1,1,0,0,0,0,0,0};
 
 
 
@@ -18,11 +19,10 @@ public:
       task(1, "IR_transmitter"),
       pin(pin),
       button(button)
-
       {}
-  
-  void send(std::array<int , S> arr) override{
-    if(arr != NULL){
+  // template<typename S>
+  void send(std::array<int , 8> arr){
+      hwlib::cout << "hello" << "\n";
       pin.write(1);
       hwlib::wait_ms(9);
       pin.flush();
@@ -55,20 +55,24 @@ public:
       pin.write(1);
       hwlib::wait_us(560);
       pin.write(0);
-    }
+    
   }
   
   void main() override {
     for(;;){
-      if(button.read() && pressed){
+      
+      if(button.read()){
+        hwlib::cout << button.read() << hwlib::endl;
         pressed = true;
-        emitter.send(shoot);
+        send(  arr);
       }
       
-      else if((!sw0.read() && pressed)  && (!sw1.read()&& pressed)) {
+      else if((!button.read() && pressed)) {
           pressed = false;
       }
       hwlib::wait_ms(100);
     }
   }
 };
+
+#endif
