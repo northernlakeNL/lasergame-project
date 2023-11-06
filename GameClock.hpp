@@ -8,7 +8,7 @@ class GameClock: public rtos::task<>{
         void main() override{for (;;){}}
     public:
     GameClock(int start_time):
-        task(1, "Timer"),
+        task(5, "Timer"),
         time(this, (start_time*rtos::ms), "game time")
     {}
     int GameTimer();

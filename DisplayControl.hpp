@@ -1,0 +1,7 @@
+#ifndef DISPLAYCONTROL_HPP
+#define DISPLAYCONTROL_HPP
+
+
+
+
+#endif // DISPLAYCONTROL_HPP

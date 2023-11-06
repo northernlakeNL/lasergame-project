@@ -12,7 +12,7 @@ class Game: public rtos::task<>{
         void main() override{for (;;){}}
     public:
     Game(int play_time, int playerID, int lives_max, int buttons_max):
-        task(3, "Gameplay"),
+        task(1, "Gameplay"),
         time(this, (play_time*rtos::ms), "time"),
         bullets(bullets_max){}
         // gamePlay(){}
