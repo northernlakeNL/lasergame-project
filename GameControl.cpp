@@ -1,7 +1,4 @@
 #include "GameControl.hpp"
-#include "logger2.hpp"
-
-extern Logger* pLogger;
 
 GameControl::GameControl(Beeper& beeper, ButtonListener& shootbutton, ButtonListener& reload_button, int prio) :
 task(prio, "GameControlTask"),

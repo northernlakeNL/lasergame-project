@@ -1,5 +1,3 @@
-#include "ShootButton.hpp"
-#include "ReloadButton.hpp"
 #include "GameControl.hpp"
 #include "Beeper.hpp"
 #include "hwlib.hpp"
