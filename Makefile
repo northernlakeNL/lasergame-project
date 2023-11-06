@@ -9,7 +9,7 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES :=
+SOURCES :=SignalPauseDetector.cpp IR_Receiver.cpp NecReciever.cpp MsgLogger.cpp IR_Emitter.cpp
 
 # header files in this project
 HEADERS :=SignalPauseDetector.hpp IR_Receiver.hpp I_necreceiver.hpp NecReciever.hpp messages.hpp MsgLogger.hpp IR_Control.hpp IR_Emitter.hpp

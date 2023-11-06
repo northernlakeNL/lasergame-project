@@ -2,7 +2,7 @@
 #define IR_CONTROL_HPP
 #include <array>
 
-
+// template<typename N>
 class IR_Control{
 
 public:

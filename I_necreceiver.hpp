@@ -6,7 +6,7 @@ class i_necreceiver{
 
 public:
     virtual void pauseDetected(int)  = 0;
-    virtual void signalDetected(int)  = 0 ;
+    virtual void signalDetected(int)  = 0;
 };
 
 #endif
