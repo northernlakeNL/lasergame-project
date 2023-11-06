@@ -17,7 +17,7 @@ public:
     ReloadButton(hwlib::pin_in& reload_pin);
     bool readButton() override;
     void main() override;
-
+    
 };
 
 #endif

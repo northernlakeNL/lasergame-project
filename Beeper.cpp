@@ -1,14 +1,14 @@
 #include "Beeper.hpp"
 
 Beeper::Beeper(hwlib::pin_out &lsp):
-    task("Beeper"),
+    task(2,"Beeper"),
     lsp(lsp), 
     shootSoundFlag(this, "shootSoundFlag"),
     reloadSoundFlag(this, "reloadSoundFlag")
 {}
 
 void Beeper::await(long long unsigned int t) {
-    while (t > hwlib::now_us()) {}
+    hwlib::wait_us(t - hwlib::now_us());
 }
 
 void Beeper::beep(int f, int d, int fd) {
@@ -28,6 +28,8 @@ void Beeper::beep(int f, int d, int fd) {
 
 void Beeper::setShootSound() {
     shootSoundFlag.set();
+    hwlib::cout << "Skrrrrt" << "\n";
+    // peewSound();
 }
 
 void Beeper::setReloadSound() {
@@ -50,8 +52,10 @@ void Beeper::reloadSound() {
 
 void Beeper::main() {
     for(;;){
-        // wait(shootSoundFlag);
+        hwlib::cout << "Skrrrrt2" << "\n";
+        wait(shootSoundFlag);
         // peewSound();
+        hwlib::cout << "Skrrrrt3" << "\n";
         // wait(reloadSoundFlag);
         // reloadSound();
     }
