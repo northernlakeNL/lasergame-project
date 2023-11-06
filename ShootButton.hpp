@@ -11,10 +11,11 @@
 class ShootButton : public rtos::task<> , public ButtonListener {
 private:
     hwlib::pin_in &shoot_pin;
+    int prio;
     bool pressed;
 
 public:
-    ShootButton(hwlib::pin_in& shoot_pin);
+    ShootButton(hwlib::pin_in& shoot_pin, int prio);
     bool readButton() override;
     void main() override;
 

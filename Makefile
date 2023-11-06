@@ -12,7 +12,7 @@
 SOURCES := ShootButton.cpp Beeper.cpp GameControl.cpp ReloadButton.cpp
 
 # header files in this project
-HEADERS := ShootButton.hpp Beeper.hpp GameControl.hpp ReloadButton.hpp ButtonListener.hpp
+HEADERS := ShootButton.hpp Beeper.hpp GameControl.hpp ReloadButton.hpp ButtonListener.hpp logger2.hpp
 
 # other places to look for files for this project
 SEARCH  := 

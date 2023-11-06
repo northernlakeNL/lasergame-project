@@ -15,8 +15,9 @@ private:
     ButtonListener& reload_button;
     rtos::flag shootFlag;
     rtos::flag reloadFlag;
+    int prio;
 public:
-    GameControl(Beeper& beeper , ButtonListener & shootbutton, ButtonListener& reload_button);
+    GameControl(Beeper& beeper , ButtonListener & shootbutton, ButtonListener& reload_button, int prio);
     void setShootFlag();
     void setReloadFlag();
     void main() override;

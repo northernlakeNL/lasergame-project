@@ -3,8 +3,8 @@
 
 extern Logger* pLogger;
 
-GameControl::GameControl(Beeper& beeper, ButtonListener& shootbutton, ButtonListener& reload_button) :
-task(1, "GameControlTask"),
+GameControl::GameControl(Beeper& beeper, ButtonListener& shootbutton, ButtonListener& reload_button, int prio) :
+task(prio, "GameControlTask"),
 beeper(beeper),
 shootbutton(shootbutton),
 reload_button(reload_button),
@@ -22,14 +22,13 @@ void GameControl::setReloadFlag() {
 
 void GameControl::main() {
     for(;;) {
+        hwlib::wait_ms(50);
         if (shootbutton.readButton())
         {
-            hwlib::cout << "kaas\n";
             beeper.setShootSound();
         }
         if (reload_button.readButton())
         {
-            hwlib::cout<< "spekkoek\n";
             beeper.setReloadSound();
         }
     }

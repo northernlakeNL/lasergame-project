@@ -17,10 +17,10 @@ int main( void ){
    auto reload_pin = target::pin_in(target::pins::d5);
    auto shoot_pin = target::pin_in(target::pins::d6);
    auto lsp = target::pin_out(target::pins::d7);
-   Beeper beeper(lsp);
-   ShootButton shoot_button(shoot_pin);
-   ReloadButton reload_button(reload_pin);
-   GameControl game_control(beeper, shoot_button, reload_button);
+   Beeper beeper(lsp, 4);
+   ShootButton shoot_button(shoot_pin, 2);
+   ReloadButton reload_button(reload_pin, 3);
+   GameControl game_control(beeper, shoot_button, reload_button, 1);
    rtos::run();
    return 0;
 }

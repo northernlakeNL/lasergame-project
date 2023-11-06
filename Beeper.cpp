@@ -1,14 +1,15 @@
 #include "Beeper.hpp"
 
-Beeper::Beeper(hwlib::pin_out &lsp):
-    task(2,"Beeper"),
+Beeper::Beeper(hwlib::pin_out &lsp, int prio):
+    task(prio, "Beeper"),
     lsp(lsp), 
     shootSoundFlag(this, "shootSoundFlag"),
     reloadSoundFlag(this, "reloadSoundFlag")
 {}
 
 void Beeper::await(long long unsigned int t) {
-    hwlib::wait_us(t - hwlib::now_us());
+    // hwlib::wait_us(t - hwlib::now_us());
+    while( t > hwlib::now_us() ){}
 }
 
 void Beeper::beep(int f, int d, int fd) {
@@ -28,12 +29,12 @@ void Beeper::beep(int f, int d, int fd) {
 
 void Beeper::setShootSound() {
     shootSoundFlag.set();
-    hwlib::cout << "Skrrrrt" << "\n";
-    // peewSound();
+    currentState = SHOOT;
 }
 
 void Beeper::setReloadSound() {
     reloadSoundFlag.set();
+    currentState = RELOAD;
 }
 
 void Beeper::peewSound() {
@@ -52,11 +53,24 @@ void Beeper::reloadSound() {
 
 void Beeper::main() {
     for(;;){
-        hwlib::cout << "Skrrrrt2" << "\n";
-        wait(shootSoundFlag);
-        // peewSound();
-        hwlib::cout << "Skrrrrt3" << "\n";
-        // wait(reloadSoundFlag);
-        // reloadSound();
+        switch(currentState){
+        case IDLE:
+            hwlib::wait_ms(50);
+            break;
+        case SHOOT: 
+            hwlib::wait_ms(50);
+            wait(shootSoundFlag);
+            peewSound();
+            currentState = IDLE;
+            break;
+        case RELOAD:
+            hwlib::wait_ms(50);
+            wait(reloadSoundFlag);
+            reloadSound();
+            currentState = IDLE;
+            break;
+        default:
+            hwlib::cout << "no worky beeper main\n";
+        }
     }
 }
