@@ -11,11 +11,11 @@
 class Button : public rtos::task<>, public ButtonListener {
 private:
     hwlib::pin_in &button_pin;
-    auto task_name
+    const char* task_name;
     int prio;
 
 public:
-    Button(hwlib::pin_in& button_pin, auto task_name, int prio);
+    Button(hwlib::pin_in& button_pin, const char* task_name, int prio);
     bool readButton() override;
     void main() override;
     

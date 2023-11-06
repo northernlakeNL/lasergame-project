@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ShootButton.cpp Beeper.cpp GameControl.cpp ReloadButton.cpp
+SOURCES := Button.cpp Beeper.cpp GameControl.cpp
 
 # header files in this project
-HEADERS := ShootButton.hpp Beeper.hpp GameControl.hpp ReloadButton.hpp ButtonListener.hpp logger2.hpp
+HEADERS := Button.hpp Beeper.hpp GameControl.hpp ButtonListener.hpp logger2.hpp
 
 # other places to look for files for this project
 SEARCH  := 
