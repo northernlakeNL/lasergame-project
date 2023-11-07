@@ -1,0 +1,10 @@
+*.o
+*.elf
+*.ld
+*.map
+*.c
+*.project
+*.bat
+_cc_flags
+_cpp_flags
+_linker_flags
