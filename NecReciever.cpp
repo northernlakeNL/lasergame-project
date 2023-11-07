@@ -15,13 +15,20 @@ void NecReciever::signalDetected(int t_us) {
     signalChannel.write(t_us);
 }
 
-void NecReciever::extractMessage(uint8_t& msg, unsigned int& nofBytes, uint8_t m, unsigned int n) {
+void NecReciever::bitSplitter(uint32_t binaryValue){
+    for (unsigned int i = 0; i < sizeof(binaryValue) * 8; i += 4) {
+        unsigned int part = (binaryValue >> i) & 0xF;
+        hwlib::cout << "bits" << (i / 4) + 1 << ": " << part << hwlib::endl;
+    }
+}
+
+void NecReciever::extractMessage(uint32_t& msg, unsigned int& nofBytes, uint32_t m, unsigned int n) {
     // Revert bits:
     msg = 0;
-    uint8_t mloc = m;
+    uint32_t mloc = m;
 
     for (unsigned int i = 0; i < n; i++) {
-        msg |= ((mloc >> i) & 1) << (7 - i);
+        msg |= ((mloc >> i) & 1) << (23 - i);
     }
     nofBytes = n / 8;
 }
@@ -57,6 +64,7 @@ void NecReciever::main() {
                     pLogger->logInt(n);
                     pLogger->logInt(m);
                     extractMessage(msg, nofBytes, m, n);
+                    bitSplitter(msg);
                     messages.messageReceived(msg, nofBytes);
                     currentState = IDLE_SIGNAL;
                 }

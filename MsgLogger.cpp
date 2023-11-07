@@ -4,7 +4,7 @@ MsgLogger::MsgLogger():
     task("msg_logger"),
     messageChannel(this, "messageChannel"){}
 
-void MsgLogger::messageReceived(uint64_t msg, unsigned int nofBytes) {
+void MsgLogger::messageReceived(uint32_t msg, unsigned int nofBytes) {
     messageChannel.write(msg);
 }
 

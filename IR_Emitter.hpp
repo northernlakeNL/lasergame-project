@@ -10,11 +10,12 @@ private:
     hwlib::target::d2_36kHz& pin;
     hwlib::target::pin_in & button;
     bool pressed = false;
-    std::array<int, 8> arr = {1, 1, 0, 0, 0, 0, 0, 0};
+    bool bit = 0;
+    unsigned int data = 0b110110101101010110111101;
 
 public:
     IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & button);
-    void send(std::array<int, 8> arr);
+    void send(uint32_t arr);
     void main() override;
 };
 

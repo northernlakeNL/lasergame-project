@@ -4,7 +4,7 @@
 class Messages{
 
 public:
-    virtual void messageReceived(uint64_t, unsigned int)  = 0;
+    virtual void messageReceived(uint32_t, unsigned int)  = 0;
     
 };
 

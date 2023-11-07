@@ -17,7 +17,7 @@ private:
     rtos::channel<unsigned int, 100> signalChannel;
     rtos::channel<unsigned int, 100> pauseChannel;
     unsigned int n = 0;
-    uint8_t m = 0;
+    uint32_t m = 0;
     int t_signalUs;
     int t_pauzeUs;
     enum States {
@@ -25,7 +25,7 @@ private:
         IDLE_PAUSE,
         IDLE_BITPASS
     };
-    uint8_t msg = 0;
+    uint32_t msg = 0;
     unsigned int nofBytes = 0;
 
     States currentState = IDLE_SIGNAL;
@@ -34,8 +34,9 @@ public:
     NecReciever(Messages& messages);
     void pauseDetected(int t_us) override;
     void signalDetected(int t_us) override;
-    void extractMessage(uint8_t& msg, unsigned int& nofBytes, uint8_t m, unsigned int n);
+    void extractMessage(uint32_t& msg, unsigned int& nofBytes, uint32_t m, unsigned int n);
     void main() override;
+    void bitSplitter(uint32_t binaryValue);
 };
 
 #endif 
