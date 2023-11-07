@@ -1,8 +1,8 @@
 #include "IR_emitter.hpp"
 
 IR_emitter::IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & button):
-    task(1, "IR_transmitter"),
-    buttonFlag(this, "buttonFlag")
+    task(3, "IR_transmitter"),
+    buttonFlag(this, "buttonFlag"),
     pin(pin),
     button(button)
     {}

@@ -17,7 +17,6 @@ private:
     enum State{ IDLE, SHOOT, RELOAD };
     State currentState = IDLE;
 
-
     
 public:
     Beeper(hwlib::pin_out &lsp, int prio);

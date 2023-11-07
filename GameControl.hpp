@@ -5,6 +5,7 @@
 #include "rtos.hpp"
 #include "beeper.hpp"
 #include "ButtonListener.hpp"
+#include "IR_Emitter.hpp"
 
 
 
@@ -13,9 +14,11 @@ private:
     Beeper& beeper;
     ButtonListener& shootbutton;
     ButtonListener& reload_button;
+    IR_emitter& emitter;
     int prio;
+    bool pressed = false;
 public:
-    GameControl(Beeper& beeper , ButtonListener & shootbutton, ButtonListener& reload_button, int prio);
+    GameControl(Beeper& beeper, ButtonListener & shootbutton, ButtonListener& reload_button, IR_emitter& emitter, int prio);
     void main() override;
 };
 

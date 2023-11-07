@@ -1,7 +1,7 @@
 #include "MsgLogger.hpp"
 
 MsgLogger::MsgLogger():
-    task("msg_logger"),
+    task(7,"msg_logger"),
     messageChannel(this, "messageChannel"){}
 
 void MsgLogger::messageReceived(uint32_t msg, unsigned int nofBytes) {

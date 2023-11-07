@@ -1,7 +1,7 @@
 #include "NecReciever.hpp"
 
 NecReciever::NecReciever(Messages& messages)
-    : task("NEC"), messages(messages), signalChannel(this, "signalChannel"), pauseChannel(this, "pauseChannel") {}
+    : task(1,"NEC"), messages(messages), signalChannel(this, "signalChannel"), pauseChannel(this, "pauseChannel") {}
 
 void NecReciever::pauseDetected(int t_us) {
     pauseChannel.write(t_us);
@@ -17,8 +17,8 @@ void NecReciever::signalDetected(int t_us) {
 
 void NecReciever::bitSplitter(uint32_t binaryValue){
     for (unsigned int i = 0; i < sizeof(binaryValue) * 8; i += 4) {
-        unsigned int part = (binaryValue >> i) & 0xF;
-        hwlib::cout << "bits" << (i / 4) + 1 << ": " << part << hwlib::endl;
+        // unsigned int part = (binaryValue >> i) & 0xF;
+        // hwlib::cout << "bits" << (i / 4) + 1 << ": " << part << hwlib::endl;
     }
 }
 
@@ -70,7 +70,7 @@ void NecReciever::main() {
                 }
                 break;
             default:
-                hwlib::cout << "not going in the right route" << hwlib::endl;
+                // hwlib::cout << "not going in the right route" << hwlib::endl;
                 break;
         }
     }
