@@ -4,18 +4,8 @@ GameControl::GameControl(Beeper& beeper, ButtonListener& shootbutton, ButtonList
 task(prio, "GameControlTask"),
 beeper(beeper),
 shootbutton(shootbutton),
-reload_button(reload_button),
-shootFlag(this, "shootFlag"),
-reloadFlag(this, "reloadFlag")
+reload_button(reload_button)
 {}
-
-void GameControl::setShootFlag() {
-    shootFlag.set();
-}
-
-void GameControl::setReloadFlag() {
-    reloadFlag.set();
-}
 
 void GameControl::main() {
     for(;;) {

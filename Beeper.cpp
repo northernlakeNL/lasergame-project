@@ -8,7 +8,6 @@ Beeper::Beeper(hwlib::pin_out &lsp, int prio):
 {}
 
 void Beeper::await(long long unsigned int t) {
-    // hwlib::wait_us(t - hwlib::now_us());
     while( t > hwlib::now_us() ){}
 }
 
@@ -42,12 +41,14 @@ void Beeper::peewSound() {
 }
 
 void Beeper::reloadSound() {
-    for (int i=1000; i<2000; i=i*1.02) { 
-      beep(i,10'000); 
-    } 
-    for (int i=2000; i>1000; i=i*.98) {
-      beep(i,10'000);
-    }
+    beep(500, 200000);
+    hwlib::wait_ms(100);
+    beep(600, 200000);
+    hwlib::wait_ms(150);
+    beep(400, 250000); 
+    hwlib::wait_ms(200); 
+    beep(800, 100000);
+    hwlib::wait_ms(100);
 }
 
 
@@ -64,7 +65,6 @@ void Beeper::main() {
             currentState = IDLE;
             break;
         case RELOAD:
-            hwlib::wait_ms(50);
             wait(reloadSoundFlag);
             reloadSound();
             currentState = IDLE;
