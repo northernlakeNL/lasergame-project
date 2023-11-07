@@ -1,5 +1,7 @@
 #include "Beeper.hpp"
+// #include "plogger2.hpp"
 
+// extern 
 Beeper::Beeper(hwlib::pin_out &lsp, int prio):
     task(prio, "Beeper"),
     lsp(lsp), 
@@ -7,9 +9,9 @@ Beeper::Beeper(hwlib::pin_out &lsp, int prio):
     reloadSoundFlag(this, "reloadSoundFlag")
 {}
 
-void Beeper::await(long long unsigned int t) {
-    while( t > hwlib::now_us() ){}
-}
+// void Beeper::await(long long unsigned int t) {
+//     hwlib::wait_us(t - hwlib::now_us());
+// }
 
 void Beeper::beep(int f, int d, int fd) {
     auto t = hwlib::now_us();
@@ -19,10 +21,10 @@ void Beeper::beep(int f, int d, int fd) {
         f = f * fd / 1000;
         lsp.write(1);
         lsp.flush();
-        await(t += p);
+        hwlib::wait_us(p);
         lsp.write(0);
         lsp.flush();
-        await(t += p);
+        hwlib::wait_us(p);
     }
 }
 
