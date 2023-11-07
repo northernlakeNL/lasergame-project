@@ -1,7 +1,11 @@
 #include "IR_emitter.hpp"
 
-IR_emitter::IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & button)
-    : task(1, "IR_transmitter"), pin(pin), button(button) {}
+IR_emitter::IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & button):
+    task(1, "IR_transmitter"),
+    buttonFlag(this, "buttonFlag")
+    pin(pin),
+    button(button)
+    {}
 
 
 void IR_emitter::send(uint32_t bytes) {
@@ -38,14 +42,14 @@ void IR_emitter::send(uint32_t bytes) {
     pin.write(0);
 }
 
+void IR_emitter::setButtonFlag(){
+    buttonFlag.set();
+}
+
 void IR_emitter::main() {
     for (;;) {
-        if (button.read()) {
-            pressed = true;
-            send(data);
-        } else if ((!button.read() && pressed)) {
-            pressed = false;
-        }
+        wait(buttonFlag);
+        send(data);
         hwlib::wait_ms(10);
     }
 }
