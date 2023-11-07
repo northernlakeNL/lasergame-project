@@ -65,6 +65,7 @@ void Beeper::main() {
             currentState = IDLE;
             break;
         case RELOAD:
+            hwlib::wait_ms(50);
             wait(reloadSoundFlag);
             reloadSound();
             currentState = IDLE;
