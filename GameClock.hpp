@@ -4,12 +4,20 @@
 class GameClock: public rtos::task<>{
     private:
         rtos::clock time;
-        int start_time;
-        void main() override{for (;;){}}
+        int countdown;
+        void main() override{
+            for (;;){
+
+                }
+            }
     public:
-    GameClock(int start_time):
+    GameClock(int countdown):
         task(5, "Timer"),
-        time(this, (start_time*rtos::ms), "game time")
+        countdown(countdown)
     {}
-    int GameTimer();
+
+    int preGameTimer();
+    int GameTimer(int gametime);
+
+
 };

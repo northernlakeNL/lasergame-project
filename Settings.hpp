@@ -18,6 +18,7 @@ private:
     Display& display;
 
     rtos::flag settings_flag;
+    rtos::channel<MenuState, 10> menu_pool;
 
     char last_key;
 public:
@@ -25,6 +26,7 @@ public:
         task(2, "settings"),
         display(display),
         settings_flag(this, "settings_flag"),
+        menu_pool(this, "menu_pool"),
         last_key(' ')
         {}
 

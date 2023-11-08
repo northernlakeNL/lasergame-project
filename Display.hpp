@@ -9,18 +9,14 @@
 
 class Display: public rtos::task<>{
     private:
-    MenuState progression = MenuState::IDLE;
-    DisplayState display = DisplayState::IDLE;
+    DisplayMenuState progression = DisplayMenuState::IDLE;
+    DisplayState display = DisplayState::SETTINGS;
     void main() override{
         for(;;) {
             switch(display){
-                case DisplayState::IDLE:
-                    hwlib::wait_ms(100);
-                    configure(progression);
-                    break;
                 case DisplayState::SETTINGS:
                     hwlib::wait_ms(100);
-                    configure(progression);
+                    configure();
                     break;
                 case DisplayState::GAME:
                     hwlib::wait_ms(100);
@@ -33,18 +29,20 @@ class Display: public rtos::task<>{
     }
     rtos::flag menu_flag;
     rtos::flag game_flag;
+    rtos::channel<DisplayMenuState, 10> display_pool;
 
     public:
     Display():
         task(3, "Display"),
         menu_flag(this, "menu_flag"),
-        game_flag(this, "game_flag")
+        game_flag(this, "game_flag"),
+        display_pool(this, "display_pool")
         {}
-    void configure(MenuState progression);
+    void configure();
     void gameInfo( int play_time, int lives, int bullets, int player = 1);
-    void setMenuFlag(MenuState menu);
+    void setMenuFlag(DisplayMenuState menu);
     void clearMenuFlag();
-    void setDisplayState(DisplayState display);
+    void updateDisplay(DisplayMenuState display);
 };
 
 #endif // DISPLAY_HPP

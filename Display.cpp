@@ -1,6 +1,6 @@
 #include "Display.hpp"
 
-void Display::configure(MenuState progression){
+void Display::configure(){
     auto scl = hwlib::target::pin_oc( hwlib::target::pins::scl );
     auto sda = hwlib::target::pin_oc( hwlib::target::pins::sda );
     auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl, sda );
@@ -17,58 +17,62 @@ void Display::configure(MenuState progression){
     auto d4 = hwlib::terminal_from( w1, f2 );
 
     oled.flush();
-
+    progression = DisplayMenuState::IDLE;
     for(;;) {
         switch(progression){
-            case MenuState::IDLE:
+            case DisplayMenuState::IDLE:
                 hwlib::wait_ms(50);
-                wait(menu_flag);
-                hwlib::cout << "Display IDLE case\n";
                 d4 << "\f" << "LASERTAG\n";
                 d3 << "\f" << "Press 'A' to \nconfigure \nsettings.";
                 oled.flush();
+                progression = display_pool.read();
                 break;
-            case MenuState::MENU:
+            case DisplayMenuState::MENU:
                 hwlib::wait_ms(50);
-                wait(menu_flag);
-                hwlib::cout << "run MenuState case display task\n";
                 d2 << "\f" << "settings";
                 d3 << "\f" << "[1] player count\n[2] play time\n[3] lives\n[4] bullets\n[C] configured";
                 oled.flush();
+                progression = display_pool.read();
                 break;
-            case MenuState::PLAYER_COUNT:
+            case DisplayMenuState::PLAYER_COUNT:
                 hwlib::wait_ms(50);
-                hwlib::cout << "Player count\n";
-                wait(menu_flag);
-                d1 << "\f" << "player count?";
+                d2 << "\f" << "settings";
+                d3 << "\f" << "How many players?\n";
                 oled.flush();
+                progression = display_pool.read();
                 break;
-            case MenuState::PLAY_TIME:
+            case DisplayMenuState::PLAY_TIME:
                 hwlib::wait_ms(50);
-                wait(menu_flag);
-                d1 << "\f" << "play time length \n[1] 05 minutes \n[2] 10 minutes \n[3] 15 minutes \n";
+                d2 << "\f" << "settings";
+                d3 << "\f" << "play time length \n[1] 05 minutes \n[2] 10 minutes \n[3] 15 minutes \n";
                 oled.flush();
+                progression = display_pool.read();
                 break;
-            case MenuState::LIVES:
+            case DisplayMenuState::LIVES:
                 hwlib::wait_ms(50);
-                wait(menu_flag);
-                d1 << "\f" << "player lives?";
+                d2 << "\f" << "settings";
+                d3 << "\f" << "player lives?";
                 oled.flush();
+                progression = display_pool.read();
                 break;
-            case MenuState::BULLETS:
+            case DisplayMenuState::BULLETS:
                 hwlib::wait_ms(50);
-                wait(menu_flag);
-                d1 << "\f" << "bullet count?";
+                d2 << "\f" << "settings";
+                d3 << "\f" << "bullet count?";
                 oled.flush();
+                progression = display_pool.read();
                 break;
             default:
                 hwlib::wait_ms(50);
                 hwlib::cout<< "ERROR: Default settings Case\n";
         }
-        hwlib::cout << "display wait\n";
         hwlib::wait_ms(100);
     }
 }
+
+// void Display::countdown(int){
+
+// }
 
 void Display::gameInfo(int play_time, int lives, int bullets, int player){
     // wait for the PC console to start
@@ -116,14 +120,13 @@ void Display::gameInfo(int play_time, int lives, int bullets, int player){
     oled.flush();
 }
 
-void Display::setMenuFlag(MenuState menu){
-    hwlib::cout << "MenuState flag set\n";
+void Display::setMenuFlag(DisplayMenuState menu){
     progression = menu;
     menu_flag.set();
 }
 
-void Display::setDisplayState(DisplayState new_state){
-    display = new_state;
+void Display::updateDisplay(DisplayMenuState new_state){
+    display_pool.write( new_state );
 }
 
 void Display::clearMenuFlag(){

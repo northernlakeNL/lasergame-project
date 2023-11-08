@@ -1,59 +1,72 @@
 #include "GameControl.hpp"
 
-// GameControl::GameControl(Beeper& beeper, ButtonListener& shootbutton, ButtonListener& reload_button) :
-// GameControl::GameControl(Settings& settings, Display& display):
-// task(1, "GameControlTask"),
-// settings(settings),
-// display(display)
-// beeper(beeper),
-// shootbutton(shootbutton),
-// reload_button(reload_button),
-// shootFlag(this, "shootFlag"),
-// reloadFlag(this, "reloadFlag")
-// {}
-
-// void GameControl::setShootFlag() {
-//     shootFlag.set();
-// }
-
-// void GameControl::setReloadFlag() {
-//     reloadFlag.set();
-// }
-
 void GameControl::main() {
     game_state = GameState::IDLE;
     for(;;) {
         switch(game_state){
             case GameState::IDLE:
                 hwlib::wait_ms(50);
-                hwlib::cout <<"GameControl\n";
-                settings.setCase(MenuState::IDLE);
-                settings.setSettingsFlag();
-                hwlib::wait_ms(500);
-                hwlib::cout << "RETURN OF THE IDLE\n";
+                settings.setCase(MenuState::IDLE); //select menu variabele andere enum
                 last_key = charChannel.read();
                 if (last_key == 'A'){
-                    charChannel.clear();
                     game_state = GameState::SETTINGS;
                     break;
                 }
                 break;
             case GameState::SETTINGS:
-                hwlib::wait_ms(50);
-                hwlib::cout <<"SettingsControl\n";
+                charChannel.clear();
+                hwlib::wait_ms(100);
                 settings.setCase(MenuState::MENU);
-                settings.setSettingsFlag();
-                hwlib::wait_ms(500);
-                hwlib::cout << "RETURN OF THE SETTING\n";
                 last_key = charChannel.read();
                 if (last_key == '1'){
                     charChannel.clear();
-                    game_state = GameState::SETTINGS;
+                    hwlib::wait_ms(100);
+                    settings.setCase(MenuState::PLAYER_COUNT);
+                    last_key = charChannel.read();
+                    player_count = last_key - '0';
                     break;
                 }
-                break;
+                if (last_key == '2'){
+                    charChannel.clear();
+                    hwlib::wait_ms(100);
+                    settings.setCase(MenuState::PLAY_TIME);
+                    last_key = charChannel.read();
+                    if (last_key == '1'){
+                        play_time = 5;
+                    }
+                    else if (last_key == '2'){
+                        play_time = 10;
+                    }
+                    else if (last_key == '3'){
+                        play_time = 15;
+                    }
+                }
+                if (last_key == '3'){
+                    charChannel.clear();
+                    hwlib::wait_ms(100);
+                    settings.setCase(MenuState::LIVES);
+                    last_key = charChannel.read();
+                    lives = last_key - '0';
+                    break;
+                }
+                if (last_key == '4'){
+                    charChannel.clear();
+                    hwlib::wait_ms(100);
+                    settings.setCase(MenuState::BULLETS);
+                    last_key = charChannel.read();
+                    bullets = last_key = '0';
+                    break;
+                }
+                if (last_key == 'C'){
+                    hwlib::cout << player_count << "\n" << bullets << "\n" << lives << "\n" << play_time << "\n"; 
+                    charChannel.clear();
+                    hwlib::wait_ms(100);
+                    game_state = GameState::COUNTDOWN;
+                    break;
+                }
             case GameState::COUNTDOWN: 
                 hwlib::wait_ms(50);
+
                 break;
             case GameState::GAME:
                 hwlib::wait_ms(50);

@@ -14,10 +14,10 @@ private:
     GameState game_state;
     Settings& settings;
     char last_key = ' ';
-    int player_count;
-    int bullets;
-    int lives;
-    int time;
+    int player_count = 0;
+    int bullets = 0;
+    int lives = 0;
+    int play_time = 0;
     rtos::channel<char,2> charChannel;
     void main() override;
 
