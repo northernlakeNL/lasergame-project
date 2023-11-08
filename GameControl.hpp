@@ -3,16 +3,16 @@
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
-#include "Settings.hpp"
 #include "Display.hpp"
 #include "EnumClass.hpp"
+#include "KeypadListener.hpp"
 // #include "beeper.hpp"
 // #include "ButtonListener.hpp"
 
-class GameControl: public rtos::task<>, public KeypadListener{
+class GameControl: public rtos::task<>, public KeypadListener {
 private:
     GameState game_state;
-    Settings& settings;
+    Display& display;
     rtos::channel<char,2> charChannel;
     rtos::clock GameClock;
     char last_key = ' ';
@@ -30,13 +30,12 @@ public:
     // GameControl(beeper& beeper, ButtonListener& buttonListener, ButtonListener& buttonListener);
     // void setShootFlag();
     // void setReloadFlag();
-    GameControl(Settings& settings):
+    GameControl(Display& display):
         task(1, "GameControlTask"),
-        settings(settings),
+        display(display),
         charChannel(this, "charChannel"),
         GameClock(this,1000000,"GameClock")
         {}
-    void setSettingsFlag();
     void writeChannel(char last_key) override;
 };
 
