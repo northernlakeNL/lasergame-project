@@ -13,7 +13,6 @@ int main(){
    hwlib::wait_ms( 500 );
    Display display;
    Settings settings(display);
-
    GameControl game_control(settings);
    Keypad keypad(game_control);
 

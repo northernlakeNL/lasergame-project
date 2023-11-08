@@ -57,7 +57,3 @@ void Settings::setCase(MenuState state){
 void Settings::start(){
     main();
 }
-
-void Settings::setSettingsFlag(){
-    settings_flag.set();
-}

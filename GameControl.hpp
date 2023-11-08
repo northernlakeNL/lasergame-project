@@ -13,14 +13,15 @@ class GameControl: public rtos::task<>, public KeypadListener{
 private:
     GameState game_state;
     Settings& settings;
+    rtos::channel<char,2> charChannel;
+    rtos::clock GameClock;
     char last_key = ' ';
     int player_count = 0;
     int bullets = 0;
     int lives = 0;
     int play_time = 0;
-    rtos::channel<char,2> charChannel;
+    int clock_counter = 0;
     void main() override;
-
     // beeper& beeper;
     // ButtonListener& buttonListener;
     // ButtonListener& buttonListener;
@@ -32,7 +33,8 @@ public:
     GameControl(Settings& settings):
         task(1, "GameControlTask"),
         settings(settings),
-        charChannel(this, "charChannel")
+        charChannel(this, "charChannel"),
+        GameClock(this,1000000,"GameClock")
         {}
     void setSettingsFlag();
     void writeChannel(char last_key) override;

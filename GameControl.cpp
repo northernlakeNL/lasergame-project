@@ -61,13 +61,24 @@ void GameControl::main() {
                     hwlib::cout << player_count << "\n" << bullets << "\n" << lives << "\n" << play_time << "\n"; 
                     charChannel.clear();
                     hwlib::wait_ms(100);
-                    game_state = GameState::COUNTDOWN;
+                    //zet neer (IR Data sturen)
+
+
+                    // zet in game state // 
+                    GameClock.clear();
+                    for(;;){
+                        wait(GameClock);
+                        clock_counter++;
+                        hwlib::cout << clock_counter << "\n";
+                        if(clock_counter >= (play_time * 60) ){
+                            hwlib::cout << "finish game\n";
+                            // needs to leave stage right here.
+                            break;
+                        }
+                    }
+                    // zet in game state // 
                     break;
                 }
-            case GameState::COUNTDOWN: 
-                hwlib::wait_ms(50);
-
-                break;
             case GameState::GAME:
                 hwlib::wait_ms(50);
                 hwlib::cout << "play game\n";
