@@ -28,22 +28,22 @@ void Beeper::beep(int f, int d, int fd) {
 
 void Beeper::setShootSound() {
     shootSoundFlag.set();
-    currentState = SHOOT;
+    currentState = BeeperState::SHOOT;
 }
 
 void Beeper::setReloadSound() {
     reloadSoundFlag.set();
-    currentState = RELOAD;
+    currentState = BeeperState::RELOAD;
 }
 
 void Beeper::setEmptyClipSound() {
     emptyClipFlag.set();
-    currentState = EMPTY_CLIP;
+    currentState = BeeperState::EMPTY_CLIP;
 }
 
 void Beeper::setHitFlag(){
     hitFlag.set();
-    currentState = HIT;
+    currentState = BeeperState::HIT;
 }
 
 void Beeper::peewSound() {
@@ -77,28 +77,28 @@ void Beeper::hitSound() {
 void Beeper::main() {
     for(;;){
         switch(currentState){
-        case IDLE:
+        case BeeperState::IDLE:
             hwlib::wait_ms(10);
             break;
-        case SHOOT: 
+        case BeeperState::SHOOT: 
             wait(shootSoundFlag);
             peewSound();
-            currentState = IDLE;
+            currentState = BeeperState::IDLE;
             break;
-        case RELOAD:
+        case BeeperState::RELOAD:
             wait(reloadSoundFlag);
             reloadSound();
-            currentState = IDLE;
+            currentState = BeeperState::IDLE;
             break;
-        case EMPTY_CLIP:
+        case BeeperState::EMPTY_CLIP:
             wait(emptyClipFlag);
             emptyClipSound();
-            currentState = IDLE;
+            currentState = BeeperState::IDLE;
             break;
-        case HIT:
+        case BeeperState::HIT:
             wait(hitFlag);
             hitSound();
-            currentState = IDLE;
+            currentState = BeeperState::IDLE;
             break;        
         default:
             hwlib::cout << "no worky beeper main\n";

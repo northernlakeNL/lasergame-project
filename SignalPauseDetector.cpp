@@ -1,7 +1,7 @@
 #include "SignalPauseDetector.hpp"
 
-SignalPauseDetector::SignalPauseDetector(IR_receiver &receiver, i_necreceiver &necController):
-    task(2,"SignalPauseDetector"),
+SignalPauseDetector::SignalPauseDetector(IR_receiver &receiver, i_necreceiver &necController, int prio):
+    task(prio,"SignalPauseDetector"),
     receiver(receiver),
     necController(necController)
     {}

@@ -8,7 +8,7 @@ class IR_Control{
 public:
     IR_Control();
 
-    virtual void send(std::array<int , 8>) = 0;
+    virtual void send(uint32_t) = 0;
 };
 
 #endif

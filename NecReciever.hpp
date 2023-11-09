@@ -14,6 +14,7 @@ extern Logger* pLogger;
 class NecReciever : public rtos::task<>, public i_necreceiver {
 private:
     Messages& messages;
+    int prio;
     rtos::channel<unsigned int, 100> signalChannel;
     rtos::channel<unsigned int, 100> pauseChannel;
     unsigned int n = 0;
@@ -32,7 +33,7 @@ private:
     States currentState = IDLE_SIGNAL;
 
 public:
-    NecReciever(Messages& messages);
+    NecReciever(Messages& messages, int prio);
     void pauseDetected(int t_us) override;
     void signalDetected(int t_us) override;
     void extractMessage(uint32_t& msg, unsigned int& nofBytes, uint32_t m, unsigned int n);

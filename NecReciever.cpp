@@ -1,7 +1,7 @@
 #include "NecReciever.hpp"
 
-NecReciever::NecReciever(Messages& messages):
-    task(1,"NEC"),
+NecReciever::NecReciever(Messages& messages, int prio):
+    task(prio,"NEC"),
     messages(messages),
     signalChannel(this, "signalChannel"),
     pauseChannel(this, "pauseChannel")

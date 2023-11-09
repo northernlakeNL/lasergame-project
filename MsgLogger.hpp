@@ -12,6 +12,7 @@ extern Logger* pLogger;
 
 class MsgLogger : public rtos::task<>, public Messages {
 private:
+    int prio;
     rtos::channel< unsigned int, 100 > messageChannel;
     rtos::channel< uint32_t, 100> receiveChannel;
     uint32_t getMessage = 0;
@@ -19,7 +20,7 @@ private:
     bool hit = 0;
 
 public:
-    MsgLogger();
+    MsgLogger(int prio);
 
     void messageReceived(uint32_t msg, unsigned int nofBytes) override;
 

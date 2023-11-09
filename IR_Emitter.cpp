@@ -1,12 +1,15 @@
 #include "IR_emitter.hpp"
 
-IR_emitter::IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & button):
-    task(3, "IR_transmitter"),
+IR_emitter::IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & button,  int prio):
+    task(prio, "IR_transmitter"),
     buttonFlag(this, "buttonFlag"),
     pin(pin),
     button(button)
     {}
-
+// 1201488
+// 1267024
+// 1332560
+// 1398096
 void IR_emitter::send(uint32_t bytes) {
     pin.write(1);
     hwlib::wait_ms(9);

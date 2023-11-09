@@ -11,6 +11,7 @@ private:
     
     IR_receiver & receiver;
     i_necreceiver & necController;
+    int prio;
     unsigned int t_signalUs = 0;
     unsigned int t_pauzeUs = 0;
     enum State {
@@ -59,6 +60,6 @@ private:
         }
     }
 public:
-    SignalPauseDetector(IR_receiver &receiver, i_necreceiver &necController);
+    SignalPauseDetector(IR_receiver &receiver, i_necreceiver &necController, int prio);
 };
 #endif 

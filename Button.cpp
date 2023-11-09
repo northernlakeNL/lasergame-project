@@ -14,6 +14,6 @@ bool Button::readButton() {
 
 void Button::main() {
     for(;;) {       
-    hwlib::wait_ms(50);
+    hwlib::wait_ms(1);
     }
 }

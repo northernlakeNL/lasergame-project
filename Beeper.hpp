@@ -5,6 +5,7 @@
 #include "rtos.hpp"
 
 #include "logger2.hpp"
+#include "EnumClass.hpp"
 
 class Beeper : public rtos::task<> {
 private:
@@ -16,8 +17,8 @@ private:
     rtos::flag hitFlag;
     void await(long long unsigned int t);
     void beep(int f, int d, int fd = 1000);
-    enum State{ IDLE, SHOOT, RELOAD, EMPTY_CLIP, HIT };
-    State currentState = IDLE;
+    // enum State{ IDLE, SHOOT, RELOAD, EMPTY_CLIP, HIT };
+    BeeperState currentState = BeeperState::IDLE;
 
     
 public:
