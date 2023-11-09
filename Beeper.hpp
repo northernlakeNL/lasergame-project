@@ -4,7 +4,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-
+#include "logger2.hpp"
 
 class Beeper : public rtos::task<> {
 private:
@@ -12,9 +12,11 @@ private:
     int prio;
     rtos::flag shootSoundFlag;
     rtos::flag reloadSoundFlag;
+    rtos::flag emptyClipFlag;
+    rtos::flag hitFlag;
     void await(long long unsigned int t);
     void beep(int f, int d, int fd = 1000);
-    enum State{ IDLE, SHOOT, RELOAD };
+    enum State{ IDLE, SHOOT, RELOAD, EMPTY_CLIP, HIT };
     State currentState = IDLE;
 
     
@@ -25,9 +27,17 @@ public:
 
     void setReloadSound();
 
+    void setEmptyClipSound();
+
+    void setHitFlag();
+
     void peewSound();
 
     void reloadSound();
+
+    void emptyClipSound();
+
+    void hitSound();
 
     void main() override;
 

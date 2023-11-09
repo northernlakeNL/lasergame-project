@@ -6,8 +6,6 @@
 #include "ButtonListener.hpp"
 
 
-
-
 class Button : public rtos::task<>, public ButtonListener {
 private:
     hwlib::pin_in &button_pin;

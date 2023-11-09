@@ -8,6 +8,12 @@ IR_emitter::IR_emitter(hwlib::target::d2_36kHz& pin, hwlib::target::pin_in & but
     {}
 
 
+int gay = 0;
+
+// gay <<= id;
+// gay <<= tijd
+// gay <<= levens
+
 void IR_emitter::send(uint32_t bytes) {
     pin.write(1);
     hwlib::wait_ms(9);

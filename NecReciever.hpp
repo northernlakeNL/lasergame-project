@@ -28,6 +28,7 @@ private:
     uint32_t msg = 0;
     unsigned int nofBytes = 0;
 
+
     States currentState = IDLE_SIGNAL;
 
 public:
@@ -36,7 +37,7 @@ public:
     void signalDetected(int t_us) override;
     void extractMessage(uint32_t& msg, unsigned int& nofBytes, uint32_t m, unsigned int n);
     void main() override;
-    void bitSplitter(uint32_t binaryValue);
+    
 };
 
 #endif 

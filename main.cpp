@@ -15,6 +15,11 @@ Logger *pLogger = nullptr;
 
 int main( void ){
 
+
+   // hwlib::cout << total << hwlib::endl;
+
+
+
    auto dumpLogButtonPin= hwlib::target::pin_in( hwlib::target::pins::d4 );
    Logger logger(0,dumpLogButtonPin);
    pLogger = &logger;
@@ -23,6 +28,8 @@ int main( void ){
    auto shoot_pin = target::pin_in(target::pins::d6);
    auto lsp = target::pin_out(target::pins::d7);
    auto ir_detector_pin = hwlib::target::pin_in( hwlib::target::pins::d5);
+
+   
 
    // switch which enables the 36 kHz output
    auto emitterPin = hwlib::target::d2_36kHz();
@@ -35,7 +42,7 @@ int main( void ){
    NecReciever nec(messageLogger);
    SignalPauseDetector detector(receiver, nec);
 
-   GameControl game_control(beeper, shoot_button, reload_button, emitter, 4);
+   GameControl game_control(beeper, shoot_button, reload_button, emitter, messageLogger, 4);
   
 
  

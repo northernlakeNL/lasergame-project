@@ -1,7 +1,11 @@
 #include "NecReciever.hpp"
 
-NecReciever::NecReciever(Messages& messages)
-    : task(1,"NEC"), messages(messages), signalChannel(this, "signalChannel"), pauseChannel(this, "pauseChannel") {}
+NecReciever::NecReciever(Messages& messages):
+    task(1,"NEC"),
+    messages(messages),
+    signalChannel(this, "signalChannel"),
+    pauseChannel(this, "pauseChannel")
+    {}
 
 void NecReciever::pauseDetected(int t_us) {
     pauseChannel.write(t_us);
@@ -15,12 +19,7 @@ void NecReciever::signalDetected(int t_us) {
     signalChannel.write(t_us);
 }
 
-void NecReciever::bitSplitter(uint32_t binaryValue){
-    for (unsigned int i = 0; i < sizeof(binaryValue) * 8; i += 4) {
-        // unsigned int part = (binaryValue >> i) & 0xF;
-        // hwlib::cout << "bits" << (i / 4) + 1 << ": " << part << hwlib::endl;
-    }
-}
+
 
 void NecReciever::extractMessage(uint32_t& msg, unsigned int& nofBytes, uint32_t m, unsigned int n) {
     // Revert bits:
@@ -64,7 +63,6 @@ void NecReciever::main() {
                     pLogger->logInt(n);
                     pLogger->logInt(m);
                     extractMessage(msg, nofBytes, m, n);
-                    bitSplitter(msg);
                     messages.messageReceived(msg, nofBytes);
                     currentState = IDLE_SIGNAL;
                 }
