@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := Keypad.cpp Display.cpp Button.cpp GameControl.cpp
+SOURCES := Display.cpp GameControl.cpp
 
 # header files in this project
-HEADERS := Keypad.hpp Display.hpp Button.hpp Game.hpp GameControl.hpp KeypadListener.hpp
+HEADERS := Keypad.hpp Display.hpp GameControl.hpp KeypadListener.hpp
 
 # other places to look for files for this project
 SEARCH  := 

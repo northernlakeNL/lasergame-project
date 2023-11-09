@@ -28,7 +28,7 @@ class Keypad:public rtos::task<> {
         auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
         for(;;){
             char key = keypad.getc(); 
-            listener.writeChannel( key );
+            listener.write( key );
         }
     }
     public:
@@ -36,7 +36,8 @@ class Keypad:public rtos::task<> {
         listener(listener)
         {}
 
-    // char readChannel();
+
+
     
 };
 

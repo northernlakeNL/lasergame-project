@@ -4,7 +4,7 @@
 class KeypadListener{
     public:
     KeypadListener(){}
-    virtual void writeChannel(char last_key) = 0;
+    virtual void write(char last_key) = 0;
 };
 
 #endif // KEYPADLISTENER_HPP

@@ -5,8 +5,6 @@
 #include "GameControl.hpp"
 
 int main(){
-
-   
    WDT->WDT_MR = WDT_MR_WDDIS;
    
    // wait for the PC console to start
