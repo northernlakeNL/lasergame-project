@@ -47,7 +47,7 @@ void GameControl::main() {
                     game_state = GameState::SETTINGS;
                     break;
                 }
-                else if(last_key == 'B'){
+                if(last_key == 'B'){
                     game_state = GameState::RECEIVE;
                     break;
                 }
@@ -129,11 +129,34 @@ void GameControl::main() {
                 break;
 
             case GameState::RECEIVE:
+                hwlib::wait_ms(50);
                 display.updateDisplay(DisplayMenuState::RECEIVE);
-                // messageLogger.messageRead
+                // hwlib::cout<< "kanker"<< hwlib::endl;
+                // if(messageLogger.messageRead())
+                
+                if ( messageLogger.messageRead()!= 0 ){
+                   
+                    bitSplitter(msg = messageLogger.messageRead());
+                    startbit = gameInfo[0];
+                    player_id = gameInfo[1];
+                    play_time = gameInfo[2];
+                    lives = gameInfo[3];
+                    bullets = gameInfo[4];
+                    score = gameInfo[5];
+                    // hwlib::cout<< "kanker"<< hwlib::endl;
+                    beeper.setEmptyClipSound();
+                    // hwlib::wait_ms(40);
+                    game_state = GameState::GAME;
+                }
+
+
+                // player_id, play_time,lives,bullets, score
+
+                
                 break;
 
             case GameState::GAME:
+            hwlib::wait_ms(10);
                 if (shootbutton.readButton() && !pressed){
                     pressed = true;
                     if (bullets == 0){
@@ -141,7 +164,9 @@ void GameControl::main() {
                     }
                     else{
                         bullets -= 1;
-                        emitter.setButtonFlag();
+                        shiftGameData();
+                        // emitter.setButtonFlag();
+                        emitter.send(data);
                         beeper.setShootSound();
                     }
                     
@@ -156,6 +181,7 @@ void GameControl::main() {
                 }
                 
                 if(messageLogger.isHit()){
+                    health -=1;
                     beeper.setHitFlag();
                     messageLogger.resetHit();
                 }

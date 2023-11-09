@@ -23,7 +23,7 @@ void MsgLogger::main() {
 }
 
 uint32_t MsgLogger::messageRead(){
-    return receiveChannel.read();
+    return getMessage;
 }
 
 bool MsgLogger::isHit(){

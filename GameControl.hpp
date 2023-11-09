@@ -28,6 +28,7 @@ private:
     rtos::channel<char,2> keyChannel;
     rtos::clock GameClock;
     char last_key = ' ';
+    int startbit= 0;
     int player_count = 0;
     int player_id = 1;
     int bullets = 0;
@@ -38,6 +39,7 @@ private:
     int score = 0;
     int prio;
     bool pressed = false;
+    uint32_t msg = 0 ;
     std::array<int, 6> gameInfo;
     uint32_t data = 0;
 

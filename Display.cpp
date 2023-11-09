@@ -15,7 +15,7 @@ void Display::configure(){
             case DisplayMenuState::RECEIVE:
                 hwlib::wait_us(10);
                 d1 << "\f" << "RECEIVE";
-                d2 << "\f" << "Waiting to receive\ndata."
+                d2 << "\f" << "Waiting to receive\ndata.";
                 oled.flush();
                 progression = display_pool.read();
                 break; 
@@ -73,7 +73,7 @@ void Display::configure(){
 
 void Display::gameInfo(int play_time, int lives, int bullets, int player){
     int minutes = play_time / 60;
-    int seconds = play_time % 60;
+    int seconds = play_time *30;
 
     // pLogger->logText("ik komhier");
     d1 << "\f" << "Player " << player;
