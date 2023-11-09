@@ -3,7 +3,10 @@
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
-#include "beeper.hpp"
+#include "Beeper.hpp"
+#include "Display.hpp"
+#include "EnumClass.hpp"
+#include "KeypadListener.hpp"
 #include "ButtonListener.hpp"
 #include "IR_Emitter.hpp"
 #include "messages.hpp"
@@ -13,25 +16,36 @@
 extern Logger* pLogger;
 
 
-class GameControl : public rtos::task<> {
+class GameControl: public rtos::task<>, public KeypadListener {
 private:
+    GameState game_state;
+    Display& display;
     Beeper& beeper;
     ButtonListener& shootbutton;
     ButtonListener& reload_button;
     IR_emitter& emitter;
     Messages& messageLogger;
-
+    rtos::channel<char,2> keyChannel;
+    rtos::clock GameClock;
+    char last_key = ' ';
+    int player_count = 0;
+    int player_id = 1;
+    int bullets = 0;
+    int lives = 0;
+    int play_time = 0;
+    int clock_counter = 0;
+    int player_number = 0;
     int prio;
-    int bullets = 5;
     bool pressed = false;
     std::array<int, 6> gameInfo;
+
+
+
 public:
-    GameControl(Beeper& beeper, ButtonListener & shootbutton, ButtonListener& reload_button, IR_emitter& emitter, Messages& messageLogger, int prio);
-    void bitSplitter(uint32_t binaryValue);
+    GameControl(Display& display,Beeper& beeper, ButtonListener & shootbutton, ButtonListener& reload_button, IR_emitter& emitter, Messages& messageLogger, int prio);
     void main() override;
+    void bitSplitter(uint32_t binaryValue);
+    void write(char last_key) override;
 };
 
-
-
-
-#endif
+#endif // GAMECONTROL_HPP

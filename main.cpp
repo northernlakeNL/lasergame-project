@@ -10,16 +10,16 @@
 #include "NecReciever.hpp"
 #include "MsgLogger.hpp"
 #include <array>
+#include "Keypad.hpp"
+#include "Display.hpp"
 
 Logger *pLogger = nullptr;
 
 int main( void ){
+   WDT->WDT_MR = WDT_MR_WDDIS;
 
-
-   // hwlib::cout << total << hwlib::endl;
-
-
-
+   hwlib::wait_ms( 500 );
+   Display display;
    auto dumpLogButtonPin= hwlib::target::pin_in( hwlib::target::pins::d4 );
    Logger logger(0,dumpLogButtonPin);
    pLogger = &logger;
@@ -29,10 +29,9 @@ int main( void ){
    auto lsp = target::pin_out(target::pins::d7);
    auto ir_detector_pin = hwlib::target::pin_in( hwlib::target::pins::d5);
 
-   
-
    // switch which enables the 36 kHz output
    auto emitterPin = hwlib::target::d2_36kHz();
+
    Beeper beeper(lsp, 8);
    Button shoot_button(shoot_pin, "ShootButtonFlag", 5);
    Button reload_button(reload_pin, "ReloadButtonFlag", 6);
@@ -42,8 +41,10 @@ int main( void ){
    NecReciever nec(messageLogger);
    SignalPauseDetector detector(receiver, nec);
 
-   GameControl game_control(beeper, shoot_button, reload_button, emitter, messageLogger, 4);
-  
+   GameControl game_control(display,beeper, shoot_button, reload_button, emitter, messageLogger, 4);
+   Keypad keypad(game_control);
+   hwlib::cout << "start\n";
+
 
  
 
@@ -52,6 +53,4 @@ int main( void ){
    rtos::run();
    return 0;
 }
-
-
 
