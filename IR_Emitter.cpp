@@ -51,7 +51,7 @@ void IR_emitter::setButtonFlag(){
 void IR_emitter::main() {
     for (;;) {
         wait(buttonFlag);
-        send(data);
+        // send(data);
         hwlib::wait_ms(10);
     }
 }

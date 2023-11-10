@@ -25,7 +25,6 @@ void NecReciever::extractMessage(uint32_t& msg, unsigned int& nofBytes, uint32_t
     // Revert bits:
     msg = 0;
     uint32_t mloc = m;
-
     for (unsigned int i = 0; i < n; i++) {
         msg |= ((mloc >> i) & 1) << (23 - i);
     }

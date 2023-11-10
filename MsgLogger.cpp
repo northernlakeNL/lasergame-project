@@ -8,6 +8,7 @@ MsgLogger::MsgLogger(int prio):
 
 void MsgLogger::messageReceived(uint32_t msg, unsigned int nofBytes) {
     messageChannel.write(msg);
+    // if
     hit = 1;
 }
 

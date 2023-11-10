@@ -39,8 +39,6 @@ class Display: public rtos::task<>{
     hwlib::terminal_from d7; // time name
     hwlib::terminal_from d8; // time
     
-
-
     void main() override{
         hwlib::target::pin_oc scl = hwlib::target::pin_oc( hwlib::target::pins::scl1 );
         hwlib::target::pin_oc sda = hwlib::target::pin_oc( hwlib::target::pins::sda1 );

@@ -9,7 +9,6 @@
 
 class Keypad:public rtos::task<> {
     private:
-    // rtos::channel<char,2> charChannel;
     KeypadListener& listener;
     void main() override{
         auto row0 = hwlib::target::pin_oc( hwlib::target::pins::a3 );

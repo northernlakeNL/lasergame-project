@@ -32,19 +32,18 @@ private:
     int player_count = 0;
     int player_id = 1;
     int bullets = 0;
+    int player_number = 0;
     int lives = 0;
     int play_time = 0;
+    int timedata = 0;
     int clock_counter = 0;
-    int player_number = 0;
+    int current_bullets = 0;
     int score = 0;
     int prio;
     bool pressed = false;
     uint32_t msg = 0 ;
     std::array<int, 6> gameInfo;
     uint32_t data = 0;
-
-
-
 public:
     GameControl(Display& display,Beeper& beeper, ButtonListener & shootbutton, ButtonListener& reload_button, IR_emitter& emitter, Messages& messageLogger, int prio);
     void main() override;

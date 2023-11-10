@@ -1,6 +1,5 @@
 #include "Display.hpp"
 
-
 void Display::configure(){
     progression = DisplayMenuState::IDLE;
     for(;;) {
@@ -8,14 +7,14 @@ void Display::configure(){
             case DisplayMenuState::IDLE:
                 hwlib::wait_us(10);
                 d1 << "\f" << "LASERTAG\n";
-                d2 << "\f" << "Press 'A' to \nconfigure \nsettings. \nPress 'B' to \n receive.";
+                d2 << "\f" << "Press 'A' to \nconfigure \nsettings.\nPress 'B' to \nreceive.";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             case DisplayMenuState::RECEIVE:
                 hwlib::wait_us(10);
                 d1 << "\f" << "RECEIVE";
-                d2 << "\f" << "Waiting to receive\ndata.";
+                d2 << "\f" << "Waiting to \nreceive data.";
                 oled.flush();
                 progression = display_pool.read();
                 break; 
@@ -56,6 +55,13 @@ void Display::configure(){
                 oled.flush();
                 progression = display_pool.read();
                 break;
+            case DisplayMenuState::FINISH:
+                hwlib::wait_us(10);
+                d1 << "\f" << "GAMEOVER";
+                d2 << "\f" << "return to host\n\nPress 'A' to \nreturn to home \nscreen";
+                oled.flush();
+                progression = display_pool.read();
+                break;
             case DisplayMenuState::ERROR:
                 hwlib::wait_us(10);
                 d1 << "\f" << "ERROR";
@@ -64,8 +70,7 @@ void Display::configure(){
                 progression = display_pool.read();
                 break;
             default:
-                hwlib::wait_us(10);
-                // hwlib::cout<< "ERROR: Default settings Case\n";
+                continue;
         }
         hwlib::wait_us(1);
     }
@@ -73,9 +78,8 @@ void Display::configure(){
 
 void Display::gameInfo(int play_time, int lives, int bullets, int player){
     int minutes = play_time / 60;
-    int seconds = play_time *30;
+    int seconds = play_time % 60;
 
-    // pLogger->logText("ik komhier");
     d1 << "\f" << "Player " << player;
     d3 << "\f" << "Bullets";
     d4 << "\f" << bullets;
