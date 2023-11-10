@@ -1,37 +1,19 @@
 #include "Button.hpp"
 
-// char Button::buttonPressed(){
-//     if(PewPress){
-//         return 'A';
-//     }
-//     else if (reloadPress){
-//         return 'B';
-//     }
-//     return 'C';
-// }
 
-bool Button::reload(){
-    static bool pressed = false;
-    if (d50.read() && !pressed){
-        pressed = true;
-        hwlib::cout << "reload\n";
-        return true;
-    }
-    else if (!d50.read()){
-        pressed = false;
-    } 
-    return false;
+Button::Button(hwlib::pin_in& button_pin, const char* task_name, int prio) :
+task(prio, task_name),
+button_pin(button_pin)
+{
+    this->task_name = task_name;
 }
 
-bool Button::shoot(){
-    static bool pressed = false;
-    if (d51.read() && !pressed){
-        pressed = true;
-        hwlib::cout << "pew\n";
-        return true;
+bool Button::readButton() {
+    return button_pin.read();   
+}
+
+void Button::main() {
+    for(;;) {       
+    hwlib::wait_ms(1);
     }
-    else if (!d51.read()){
-        pressed = false;
-    } 
-    return false;
 }

@@ -9,7 +9,6 @@
 
 class Keypad:public rtos::task<> {
     private:
-    // rtos::channel<char,2> charChannel;
     KeypadListener& listener;
     void main() override{
         auto row0 = hwlib::target::pin_oc( hwlib::target::pins::a3 );
@@ -27,6 +26,7 @@ class Keypad:public rtos::task<> {
         auto matrix   = hwlib::matrix_of_switches( row_port, collumn_port );
         auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
         for(;;){
+            hwlib::wait_ms(50);
             char key = keypad.getc(); 
             listener.write( key );
         }

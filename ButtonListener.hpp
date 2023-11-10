@@ -1,10 +1,13 @@
-#ifndef BUTTONLISTENER_HPP
-#define BUTTONLISTENER_HPP
+#ifndef BUTTON_LISTENER_HPP
+#define BUTTON_LISTENER_HPP
 
 class ButtonListener{
+
+    
 public:
-    ButtonListener(){}
-    virtual void ButtonPressed() = 0;
+    virtual bool readButton() = 0;
+
+
 };
 
-#endif // BUTTONLISTENER_HPP
+#endif

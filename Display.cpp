@@ -5,61 +5,74 @@ void Display::configure(){
     for(;;) {
         switch(progression){
             case DisplayMenuState::IDLE:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d1 << "\f" << "LASERTAG\n";
-                d2 << "\f" << "Press 'A' to \nconfigure \nsettings.";
+                d2 << "\f" << "Press 'A' to \nconfigure \nsettings.\nPress 'B' to \nreceive.";
                 oled.flush();
                 progression = display_pool.read();
                 break;
+            case DisplayMenuState::RECEIVE:
+                hwlib::wait_us(10);
+                d1 << "\f" << "RECEIVE";
+                d2 << "\f" << "Waiting to \nreceive data.";
+                oled.flush();
+                progression = display_pool.read();
+                break; 
             case DisplayMenuState::MENU:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d1 << "\f" << "settings";
                 d2 << "\f" << "[1] player count\n[2] play time\n[3] lives\n[4] bullets\n[C] configured";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             case DisplayMenuState::PLAYER_COUNT:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d2 << "\f" << "How many players?\n";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             case DisplayMenuState::PLAY_TIME:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d2 << "\f" << "play time length \n[1] 05 minutes \n[2] 10 minutes \n[3] 15 minutes \n";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             case DisplayMenuState::LIVES:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d2 << "\f" << "player lives?";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             case DisplayMenuState::BULLETS:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d2 << "\f" << "bullet count?";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             case DisplayMenuState::DONE:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d2 << "\f" << "Press 'A' to\nstart playing \n\nPress 'D' \nto cancel";
                 oled.flush();
                 progression = display_pool.read();
                 break;
+            case DisplayMenuState::FINISH:
+                hwlib::wait_us(10);
+                d1 << "\f" << "GAMEOVER";
+                d2 << "\f" << "return to host\n\nPress 'A' to \nreturn to home \nscreen";
+                oled.flush();
+                progression = display_pool.read();
+                break;
             case DisplayMenuState::ERROR:
-                hwlib::wait_ms(50);
+                hwlib::wait_us(10);
                 d1 << "\f" << "ERROR";
                 d2 << "\f" << "Entry Not \nsufficient \n\nPress 'A' to return to \nsettings";
                 oled.flush();
                 progression = display_pool.read();
                 break;
             default:
-                hwlib::wait_ms(50);
-                hwlib::cout<< "ERROR: Default settings Case\n";
+                continue;
         }
-        hwlib::wait_ms(100);
+        hwlib::wait_us(1);
     }
 }
 
