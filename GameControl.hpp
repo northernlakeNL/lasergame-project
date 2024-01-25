@@ -51,7 +51,8 @@ private:
     std::array<int, 6> gameInfo;
     uint32_t data = 0;
     uint32_t ID = 0;
-    std::array<int, 8> FinalScore;
+    int FinalScore[8][1] = {{0},{0},{0},{0},{0},{0},{0},{0}};
+    int filled = 0;
 
 
 public:

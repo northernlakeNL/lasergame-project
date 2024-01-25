@@ -197,8 +197,6 @@ void GameControl::main() {
                         lives -=1;
                         beeper.setHitFlag();
                         messageLogger.resetHit();
-                        // display.HitInfo(play_time,lives,current_bullets,enemy_id); // play_time is in seconds
-                        // hwlib::wait_ms(10000);
                     }
                 }
                 GameClock.clear();
@@ -206,7 +204,7 @@ void GameControl::main() {
                     wait(GameClock);
                     play_time--;
                     hwlib::wait_ms(50);
-                    score +=0.5; // elke seconde levend is 10 punten
+                    score +=0.05; // elke seconde levend is 1 punt
                     display.gameInfo(play_time,lives,current_bullets, player_id); // play_time is in seconds
                     if(play_time <= 0 || lives <= 0){
                         game_state = GameState::FINISH;
@@ -226,11 +224,24 @@ void GameControl::main() {
                 if (play_time <= 0){
                     if (player_id == 1){
                         display.updateDisplay(DisplayMenuState::FINISH_HOST);
-                        FinalScore[player_id] = score;
+                        FinalScore[player_id-1][0] = score;
                         if(messageLogger.isHit()){
                             bitSplitter(msg = messageLogger.messageRead());
-                            int id = gameInfo[4] -1;
-                            FinalScore[id] = gameInfo[0];
+                            int id = gameInfo[4] - 1;
+                            FinalScore[id][0] = gameInfo[0];
+                            beeper.hitSound();
+                        }
+                        for (int j = 0; j <= player_count-1; j++){
+                            if (FinalScore[j][0] != 0){
+                                filled++;
+                            }
+                            if (filled == player_count){
+                                last_key = keyChannel.read();
+                                if (last_key == 'A'){
+                                    game_state = GameState::WINNERSCREEN;
+                                    break;
+                                }
+                            }
                         }
                     }
                     else if (player_id != 1){
@@ -239,22 +250,25 @@ void GameControl::main() {
                             pressed = true;
                             shiftGameData();
                             emitter.send(data);
+                            beeper.setShootSound();
                         }
-                    }
-                    last_key = keyChannel.read();
-                    if (last_key == 'A'){
-                            game_state = GameState::WINNERSCREEN;
+                        else if(reload_button.readButton() && !pressed){
+                            game_state = GameState::IDLE;
                             break;
                         }
+                    }
+
                 }
                 break;
             case GameState::WINNERSCREEN:
-                for (int i = 0; i < 7; i++){
-                    if (FinalScore[i] > winner_score){
-                        winner_score = FinalScore[i];
-                        winner_id = i+1;
+                hwlib::wait_ms(10);
+                for (int i = 0; i < player_count; i++){
+                    if (FinalScore[i][0] > winner_score){
+                        winner_score = FinalScore[i][0];
+                        winner_id = i + 1;
                     }
                 }
+                hwlib::wait_ms(10);
                 display.WinnerScreen(winner_id, winner_score);
                 if (last_key == 'A'){
                         game_state = GameState::IDLE;

@@ -130,7 +130,7 @@ void Display::HitInfo(int play_time, int lives, int bullets, int enemy){
 
 void Display::WinnerScreen(int player, int score){
     hwlib::wait_us(10);
-    d1 << "\f" << "WINNER IS";
+    d1 << "\f" << "WINNER";
     d2 << "\f" << "Player " << player << "\nScore: " << score;
     oled.flush();
     progression = display_pool.read();
