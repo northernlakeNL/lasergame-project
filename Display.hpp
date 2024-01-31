@@ -99,6 +99,7 @@ class Display: public rtos::task<>{
     void gameInfo( int play_time, int lives, int bullets, int player = 1);
     void updateDisplay(DisplayMenuState display);
     void HitInfo(int play_time, int lives, int bullets, int enemy);
+    void ReceivedMessage(int id, int score);
     void WinnerScreen(int player, int score);
     void gameOverScreen(int play_time);
 };

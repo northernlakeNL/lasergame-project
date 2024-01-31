@@ -128,6 +128,12 @@ void Display::HitInfo(int play_time, int lives, int bullets, int enemy){
     oled.flush();
 }
 
+void Display::ReceivedMessage(int id, int score){
+    hwlib::wait_us(10);
+    d1 << "\f" << id << "\n" << score;
+    oled.flush();
+}
+
 void Display::WinnerScreen(int player, int score){
     hwlib::wait_us(10);
     d1 << "\f" << "WINNER";
